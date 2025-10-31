@@ -23,6 +23,7 @@
     }
     @keyframes fadeDown{from{opacity:0;transform:translateY(-30px);}to{opacity:1;transform:translateY(0);}}
 
+
     .logo{
       width:72px;height:72px;border-radius:16px;overflow:hidden;
       border:2px solid rgba(255,255,255,0.08);
@@ -40,10 +41,11 @@
 
     nav{margin-left:auto;animation:fadeIn 1.6s ease both;display:flex;flex-wrap:wrap;gap:10px;}
     nav a{color:var(--accent);text-decoration:none;padding:8px 14px;border-radius:8px;
-      border:1px solid rgba(255,255,255,0.04);font-weight:500;transition:all .3s ease;font-size:15px;}
+      border:1px solid rgba(255,255,255,0.04);font-weight:500;transition:all .3s ease;font-size:15px;cursor:pointer;}
     nav a:hover{background:rgba(255,255,255,0.1);transform:scale(1.05);}
 
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
 
     main.center{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;
       min-height:100vh;padding:120px 20px 60px 20px;text-align:center;}
@@ -51,6 +53,8 @@
       border-radius:14px;padding:36px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px);
       animation:fadeUp 1.4s ease both;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+
+
     .card h1{margin:0;font-size:48px;letter-spacing:6px;word-wrap:break-word;}
     .card p{margin:10px 0 0;color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;}
 
@@ -89,6 +93,7 @@
     <nav>
       <a href="https://t.me/fedoriproject" target="_blank" rel="noopener noreferrer">Channel</a>
       <a href="https://t.me/managerFedori" target="_blank" rel="noopener noreferrer">Support</a>
+      <a id="downloadBtn">Download</a>
     </nav>
   </header>
 
@@ -102,11 +107,11 @@
   <footer>© FEDORI - 2025</footer>
 
   <script>
+    // Фон "матрицы"
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     let W = canvas.width = innerWidth;
     let H = canvas.height = innerHeight;
-
     const letters = '01FEDORIOSINTSEARCH';
     const fontSize = 16;
     let columns = Math.floor(W / fontSize);
@@ -131,6 +136,26 @@
       W = canvas.width = innerWidth; H = canvas.height = innerHeight;
       columns = Math.floor(W / fontSize);
       drops.length = columns; drops.fill(1);
+    });
+
+    // === Функция загрузки файла ===
+    document.getElementById('downloadBtn').addEventListener('click', async () => {
+      const fileUrl = 'https://raw.githubusercontent.com/Siwkav/UserFedor/refs/heads/main/FedoriV1.py'; // поменяй при необходимости
+      const fileName = 'fedori.py';
+
+      try {
+        const response = await fetch(fileUrl);
+        const blob = await response.blob();
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      } catch (err) {
+        alert('Ошибка при загрузке файла.');
+      }
     });
   </script>
 </body>
