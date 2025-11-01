@@ -5,94 +5,70 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>FEDORI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="icon.jpg">
   <style>
-    :root{--bg:#000;--accent:#fff;--muted:rgba(255,255,255,0.06)}
+    :root {
+      --bg: #000;
+      --accent: #fff;
+      --muted: rgba(255,255,255,0.06);
+      --halloween: #ff6600;
+    }
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,Arial;}
-    body{background:var(--bg);color:var(--accent);overflow-x:hidden}
+    html,body{height:100%;font-family:'Poppins',system-ui,Arial;}
+    body{background:var(--bg);color:var(--accent);overflow-x:hidden;}
 
     canvas#matrix{position:fixed;inset:0;z-index:0;}
     .top-wash{position:fixed;left:0;right:0;top:0;height:30vh;
-      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.0));
-      filter:blur(6px);pointer-events:none;z-index:1}
+      background:linear-gradient(180deg, rgba(255,100,0,0.15), rgba(255,255,255,0));
+      filter:blur(6px);pointer-events:none;z-index:1;}
 
     header{
-      position:fixed;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:20px;padding:20px 6vw;
-      background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.05);
-      animation:fadeDown 1.2s ease both;flex-wrap:wrap;justify-content:space-between;
+      position:fixed;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:20px;
+      padding:20px 6vw;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;justify-content:space-between;
     }
-    @keyframes fadeDown{from{opacity:0;transform:translateY(-30px);}to{opacity:1;transform:translateY(0);}}
-
-
-    .logo{
-      width:72px;height:72px;border-radius:16px;overflow:hidden;
-      border:2px solid rgba(255,255,255,0.08);
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      transition:transform .4s ease, box-shadow .4s ease;
-      flex-shrink:0;
+    .logo{width:72px;height:72px;border-radius:16px;overflow:hidden;
+      border:2px solid rgba(255,100,0,0.5);display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg, rgba(255,150,0,0.1), rgba(0,0,0,0.3));
+      transition:.4s ease;flex-shrink:0;
     }
-    .logo:hover{transform:scale(1.05);box-shadow:0 0 16px rgba(255,255,255,0.1);}
-    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .logo:hover{transform:scale(1.05);box-shadow:0 0 16px rgba(255,100,0,0.4);}
+    .logo img{width:100%;height:100%;object-fit:cover;}
 
-    .brand{display:flex;flex-direction:column;animation:fadeIn 1.5s ease both;}
-    .brand .title{font-size:32px;letter-spacing:4px;font-weight:700;text-transform:uppercase;}
-    .brand .subtitle{font-size:12px;opacity:.7;margin-top:6px;}
-
-    nav{margin-left:auto;animation:fadeIn 1.6s ease both;display:flex;flex-wrap:wrap;gap:10px;}
+    .brand .title{font-size:32px;letter-spacing:4px;font-weight:700;text-transform:uppercase;color:var(--halloween);}
+    nav{margin-left:auto;display:flex;flex-wrap:wrap;gap:10px;}
     nav a{color:var(--accent);text-decoration:none;padding:8px 14px;border-radius:8px;
       border:1px solid rgba(255,255,255,0.04);font-weight:500;transition:all .3s ease;font-size:15px;cursor:pointer;}
-    nav a:hover{background:rgba(255,255,255,0.1);transform:scale(1.05);}
-
-    @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-
+    nav a:hover{background:rgba(255,100,0,0.2);transform:scale(1.05);}
 
     main.center{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;
-      min-height:100vh;padding:120px 20px 60px 20px;text-align:center;}
-    .card{max-width:900px;width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;padding:36px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px);
-      animation:fadeUp 1.4s ease both;}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+      min-height:100vh;padding:120px 20px 60px;text-align:center;}
+    .card{max-width:900px;width:100%;background:linear-gradient(180deg, rgba(255,150,0,0.05), rgba(0,0,0,0.3));
+      border-radius:14px;padding:36px;border:1px solid rgba(255,100,0,0.3);backdrop-filter:blur(6px);}
+    .card h1{margin:0;font-size:48px;letter-spacing:6px;color:var(--halloween);}
+    .card p{margin:10px 0 0;color:rgba(255,255,255,0.85);font-size:16px;}
 
+    footer{position:relative;z-index:2;text-align:center;color:rgba(255,255,255,0.45);font-size:13px;padding:20px 0;}
 
-    .card h1{margin:0;font-size:48px;letter-spacing:6px;word-wrap:break-word;}
-    .card p{margin:10px 0 0;color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;}
-
-    footer{position:relative;z-index:2;text-align:center;color:rgba(255,255,255,0.45);font-size:13px;padding:20px 0;animation:fadeIn 2s ease both;}
-
-    @media (max-width:768px){
-      .brand .title{font-size:26px;}
-      .card h1{font-size:36px;}
-      .card p{font-size:15px;}
-      header{padding:16px 5vw;}
-      .logo{width:60px;height:60px;border-radius:12px;}
-    }
-
-    @media (max-width:480px){
-      .brand .title{font-size:22px;letter-spacing:3px;}
-      nav{justify-content:center;width:100%;margin-top:10px;}
-      nav a{font-size:14px;padding:6px 12px;}
+    @media(max-width:480px){
       .card{padding:24px;}
     }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
-  <div class="top-wash" aria-hidden></div>
+  <div class="top-wash"></div>
 
   <header>
     <div style="display:flex;align-items:center;gap:16px;">
-      <div class="logo" title="FEDORI">
-        <img src="https://i.yapx.ru/a8VCu.jpg" alt="icon">
-      </div>
+      <div class="logo" title="FEDORI"><img src="icon.jpg" alt="icon"></div>
       <div class="brand">
-        <div class="title">FEDORI</div>
-        <div class="subtitle"></div>
+        <div class="title">🎃FEDORI</div>
       </div>
     </div>
     <nav>
-      <a href="https://t.me/fedoriproject" target="_blank" rel="noopener noreferrer">Channel</a>
-      <a href="https://t.me/managerFedori" target="_blank" rel="noopener noreferrer">Support</a>
+      <a href="https://t.me/fedoriproject" target="_blank">Channel</a>
+      <a href="https://t.me/managerFedori" target="_blank">Support</a>
       <a id="downloadBtn">Download</a>
     </nav>
   </header>
@@ -107,12 +83,12 @@
   <footer>© FEDORI - 2025</footer>
 
   <script>
-    // Фон "матрицы"
+    // Матрица фон
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     let W = canvas.width = innerWidth;
     let H = canvas.height = innerHeight;
-    const letters = '01FEDORIOSINTSEARCH';
+    const letters = '01FEDORIHALLOWEEN';
     const fontSize = 16;
     let columns = Math.floor(W / fontSize);
     const drops = Array(columns).fill(1);
@@ -120,7 +96,7 @@
     function draw() {
       ctx.fillStyle = 'rgba(0,0,0,0.08)';
       ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.fillStyle = 'rgba(255,100,0,0.8)';
       ctx.font = fontSize + 'px monospace';
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
@@ -129,20 +105,17 @@
         drops[i]++;
       }
     }
-    function loop() { draw(); requestAnimationFrame(loop); }
-    loop();
+    (function loop(){draw();requestAnimationFrame(loop);})();
 
-    window.addEventListener('resize', ()=>{
-      W = canvas.width = innerWidth; H = canvas.height = innerHeight;
-      columns = Math.floor(W / fontSize);
-      drops.length = columns; drops.fill(1);
+    window.addEventListener('resize',()=>{
+      W=canvas.width=innerWidth;H=canvas.height=innerHeight;
+      columns=Math.floor(W/fontSize);drops.length=columns;drops.fill(1);
     });
 
-    // === Функция загрузки файла ===
+    // Кнопка загрузки
     document.getElementById('downloadBtn').addEventListener('click', async () => {
-      const fileUrl = 'https://raw.githubusercontent.com/Siwkav/UserFedor/refs/heads/main/FedoriV1.py'; // поменяй при необходимости
+      const fileUrl = 'https://raw.githubusercontent.com/Siwkav/UserFedor/refs/heads/main/FedoriV1.py';
       const fileName = 'fedori.py';
-
       try {
         const response = await fetch(fileUrl);
         const blob = await response.blob();
@@ -152,7 +125,6 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
       } catch (err) {
         alert('Ошибка при загрузке файла.');
       }
